@@ -1,4 +1,4 @@
-module.exports = (reason) => {
+module.exports = (socket, reason) => {
 	eventLog(`disconnected reason`, reason)
 
 	socket.connected = false

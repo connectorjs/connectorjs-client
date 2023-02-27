@@ -1,7 +1,7 @@
 const readXlsxFile = require('read-excel-file/node')
 const readSheetNames = require('read-excel-file/node').readSheetNames
 
-module.exports = (params, callback) => {
+module.exports = (socket, params, callback) => {
 	try {
 		let filePath=params.filePath
 		if(!filePath)
@@ -41,4 +41,3 @@ module.exports = (params, callback) => {
 		emitError(err, callback)
 	}
 }
-

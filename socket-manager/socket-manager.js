@@ -1,27 +1,27 @@
 const WebSocket = require('ws').WebSocket
-var url = 'ws://adam.miastart.net:8080'
-var ws = null
-const reconnectionInterval=Number(process.env.RECONNECTION_INTERVAL || 5000)
-let osInfo = {
-  deneme: 'windows 11',
-  tarih: new Date()
+var url = process.env.SOCKET_SERVER_URL || ''
+global.ws = null
+var reconnectionCount = 1
+const reconnectionInterval = () => {
+  let interval = Number(process.env.RECONNECTION_INTERVAL || 5000)
+  return interval
+  let t = interval * reconnectionCount++
+  let limit = 20 * 60 * 1000 // 20min
+  if (t > limit) {
+    t = limit
+  }
+  return t
 }
 
-module.exports = () => new Promise((resolve, reject) => {
-  try {
-    const moduleHolder = socketModuleLoader(path.join(__dirname, 'sockets'), '.socket.js')
+let osInfo = util.osBaseInfo()
+let sayac = 0
+var moduleHolder = {}
 
-    Object.keys(moduleHolder).forEach((key) => {
-      console.log(`module`, key )
-      // socket.on(key, (...placeholders) => {
-      //   try {
-      //     moduleHolder[key](...placeholders)
-      //   } catch (err) {
-      //     errorLog(`[${key}]`.cyan, err)
-      //     emitError(err)
-      //   }
-      // })
-    })
+module.exports = () => new Promise(async (resolve, reject) => {
+  try {
+    moduleHolder = await util.moduleLoader(path.join(__dirname, 'sockets'), '.socket.js')
+
+    connectServer()
 
     resolve('')
   } catch (e) {
@@ -29,84 +29,105 @@ module.exports = () => new Promise((resolve, reject) => {
   }
 })
 
-function connectServer() {
-  // try {
 
-    ws = new WebSocket(url)
-    ws.on('open', () => {
-      if(!process.env.CLIENT_ID || !process.env.CLIENT_PASS){
-        ws.send(JSON.stringify({ event: 'register', info: osInfo }))
-      }else{
-        ws.send(JSON.stringify({ event: 'subscribe', clientId: process.env.CLIENT_ID, clientPass:process.env.CLIENT_PASS }))
-      }
-    })
+global.sendError = (err, callback) => {
+  console.log(`err`, err)
+  let error = { name: 'Error', message: '' }
+  if (typeof err == 'string') {
+    error.message = err
+  } else {
+    error.name = err.name || 'Error'
+    if (err.message)
+      error.message = err.message
+    else
+      error.message = err.name || ''
+  }
 
-    ws.on('message', (rawData) => {
-      if(rawData){
-        let data = JSON.parse(rawData.toString())
-        console.log(data)
-      }
-    })
-    ws.on('ping', (msg) => {
-      ws.pong()
-    })
-    ws.on('error', (err) => {
-      errorLog(err)
-    })
-
-    ws.on('close', () => {
-      setTimeout(() => {
-        connectServer()
-      }, reconnectionInterval)
-    })
-
-  // } catch (err) {
-  //   console.error(err)
-  //   setTimeout(() => {
-  //     connectServer()
-  //   }, reconnectionInterval)
-  // }
+  let obj = {
+    event: 'callback',
+    success: false,
+    error: error,
+    callback:callback || ''
+  }
+  console.log(`obj`, obj )
+  if(global.ws.readyState === WebSocket.OPEN)
+    global.ws.send(JSON.stringify(obj))
 }
 
-function socketModuleLoader(folder, suffix) {
-  let holder = {}
+global.sendSuccess = (data, callback) => {
+
+  let obj = {
+    event: 'callback',
+    success: true,
+    data: data,
+    callback:callback || ''
+  }
+  if(global.ws.readyState === WebSocket.OPEN)
+    global.ws.send(JSON.stringify(obj))
+
+}
+
+
+
+
+function connectServer() {
   try {
 
-    let files = fs.readdirSync(folder)
-    files.forEach((e) => {
-      let f = path.join(folder, e)
-      if (!fs.statSync(f).isDirectory()) {
-        let fileName = path.basename(f)
-        let apiName = fileName.substr(0, fileName.length - suffix.length)
-        if (apiName != '' && (apiName + suffix) == fileName) {
-          holder[apiName] = require(f)
+    global.ws = new WebSocket(url)
+
+    
+
+
+    ws.on('open', () => {
+      reconnectionCount = 1
+
+      devLog(`Connected to `, `${process.env.SOCKET_SERVER_URL}`.brightGreen)
+      if (!process.env.CLIENT_ID || !process.env.CLIENT_PASS) {
+        let clientId = ''
+        let clientPass = ''
+
+        ws.send(JSON.stringify({ event: 'register', osInfo: osInfo, clientId: clientId, clientPass: clientPass }))
+
+      } else {
+        ws.send(JSON.stringify({ event: 'subscribe', clientId: process.env.CLIENT_ID, clientPass: process.env.CLIENT_PASS }))
+
+      }
+
+    })
+    
+
+    ws.on('message', (rawData) => {
+      if (rawData) {
+        try {
+          let data = JSON.parse(rawData.toString())
+          if (data.event && moduleHolder[data.event]) {
+            moduleHolder[data.event](global.ws, data)
+          }
+        } catch (err) {
+          let eventName = rawData.toString()
+          if (eventName && moduleHolder[eventName]) {
+            moduleHolder[eventName](global.ws, eventName)
+          }
         }
       }
     })
 
+    ws.on('ping', () => ws.pong())
+
+    // ws.on('error', (err) => {
+    //   errorLog(err.name, err.message)
+    // })
+
+    ws.on('close', () => {
+      setTimeout(() => {
+        connectServer()
+      }, reconnectionInterval())
+    })
+
   } catch (err) {
-    errorLog(`[WebsocketAPI]`.cyan, 'socketModuleLoader'.green, err)
-    process.exit(1)
+    errorLog(err)
+    setTimeout(() => {
+      connectServer()
+    }, reconnectionInterval())
   }
-  return holder
 }
-
-// global.emitError = (err, callback) => {
-
-//   let error = { name: 'Error', message: '' }
-//   if (typeof err == 'string') {
-//     error.message = err
-//   } else {
-//     error.name = err.name || 'Error'
-//     if (err.message)
-//       error.message = err.message
-//     else
-//       error.message = err.name || ''
-//   }
-
-//   socket.emit(callback || 'error', false, error)
-// }
-
-// global.emitResult = (data, callback) => {
-//   socket.emit(callback || 'message', true, data)
-// }

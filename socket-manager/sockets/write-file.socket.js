@@ -1,4 +1,4 @@
-module.exports = (params, callback) => {
+module.exports = (socket, params, callback) => {
 	try {
 		let filePath = params.filePath
 		let encoding = params.encoding || 'utf8'
@@ -20,4 +20,3 @@ module.exports = (params, callback) => {
 		emitError(err, callback)
 	}
 }
-

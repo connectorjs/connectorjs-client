@@ -1,4 +1,4 @@
-module.exports = (params, callback) => {
+module.exports = (socket, params) => {
 	try {
 		const sql = require('mssql')
 		sql.connect(params.config)
@@ -19,4 +19,3 @@ module.exports = (params, callback) => {
 		emitError(err, callback)
 	}
 }
-

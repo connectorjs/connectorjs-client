@@ -1,6 +1,6 @@
 const writeXlsxFile  = require('write-excel-file/node')
 
-module.exports = (params, callback) => {
+module.exports = (socket, params, callback) => {
 	try {
 		if(!params.filePath)
 			return emitError('filePath is required',callback)
@@ -29,4 +29,3 @@ module.exports = (params, callback) => {
 		emitError(err, callback)
 	}
 }
-

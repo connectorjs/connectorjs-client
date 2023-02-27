@@ -1,5 +1,5 @@
 let mysql = require('mysql')
-module.exports = (params, callback) => {
+module.exports = (socket, params, callback) => {
 	try {
 		let con = mysql.createConnection(params.config)
 		con.connect(err => {
@@ -9,7 +9,7 @@ module.exports = (params, callback) => {
 						if (!err)
 							emitResult(result, callback)
 						else
-							emitError(err)
+							emitError(err, callback)
 					})
 				} else {
 					emitResult(true, callback)

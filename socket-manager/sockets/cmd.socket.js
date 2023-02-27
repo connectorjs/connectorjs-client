@@ -1,19 +1,24 @@
 const cmd=require('node-cmd')
-module.exports = (params, callback) => {
+const eventName = path.basename(__filename, '.socket.js')
+
+module.exports = (socket, params) => {
 	try {
-		let command=params.command
-		if(!command)
-			return emitError('command is required',callback)
+		let command=params.command || ''
+		if(command){
+      cmd.run(command,(err,data,stderr)=>{
+        if(!err){
+          sendSuccess( data, params.callback)
+        }else{
+          sendError(stderr,params.callback)
+        }
+      })
+    }else{
+      sendError('Command is required',params.callback)
+    }
+			
 		
-		cmd.run(command,(err,data,stderr)=>{
-			if(!err){
-				emitResult(data,callback)
-			}else{
-				emitError(err,callback)
-			}
-		})
 
 	} catch (err) {
-		emitError(err, callback)
+		sendError(err, params.callback)
 	}
 }

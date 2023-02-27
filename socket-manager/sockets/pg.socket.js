@@ -1,5 +1,5 @@
 const { Client } = require('pg')
-module.exports = (params, callback) => {
+module.exports = (socket, params, callback) => {
 	try {
 		let client = new Client(params.config)
 		client
