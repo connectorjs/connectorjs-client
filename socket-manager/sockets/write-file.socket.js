@@ -1,22 +1,22 @@
-module.exports = (socket, params, callback) => {
+module.exports = (socket, params) => {
 	try {
 		let filePath = params.filePath
 		let encoding = params.encoding || 'utf8'
 		if (!filePath)
-			return emitError('filePath is required', callback)
+			return sendError('filePath is required', params.callback)
 		if (!params.data)
-			return emitError('data is required', callback)
+			return sendError('data is required', params.callback)
 		
-		filePath=htmlEval(filePath)
+    
+		filePath=util.htmlEval(filePath)
 		let data = params.data.data || params.data
 
 		try {
-			data = atob(data)
+			data = util.decodeBase64(data)
 		} catch { }
 		fs.writeFileSync(filePath, params.data, encoding)
-		emitResult(true, callback)
-
+    sendSuccess(filePath, params.callback)
 	} catch (err) {
-		emitError(err, callback)
+		sendError(err, params.callback)
 	}
 }

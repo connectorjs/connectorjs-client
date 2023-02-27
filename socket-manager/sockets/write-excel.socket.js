@@ -1,10 +1,11 @@
 const writeXlsxFile  = require('write-excel-file/node')
 
-module.exports = (socket, params, callback) => {
+module.exports = (socket, params) => {
 	try {
 		if(!params.filePath)
-			return emitError('filePath is required',callback)
-		let	filePath=htmlEval(filePath)
+			return sendError('filePath is required',params.callback)
+
+		let	filePath=util.htmlEval(params.filePath)
 		let options={
 			columns:params.columns,
 			schema:params.schema,
@@ -22,10 +23,10 @@ module.exports = (socket, params, callback) => {
 		}
 		
 		writeXlsxFile(params.data || [],options)
-		.then(res=>emitResult(res,callback))
-		.catch(err=>emitError(err,callback))
+		.then(res=>sendSuccess(filePath,params.callback))
+		.catch(err=>sendError(err,params.callback))
 
 	} catch (err) {
-		emitError(err, callback)
+		sendError(err, params.callback)
 	}
 }

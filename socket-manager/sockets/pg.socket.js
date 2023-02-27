@@ -1,23 +1,23 @@
 const { Client } = require('pg')
-module.exports = (socket, params, callback) => {
+module.exports = (socket, params) => {
 	try {
-		let client = new Client(params.config)
+		const client = new Client(params.config)
 		client
 			.connect()
 			.then(() => {
 				if (params.query) {
 					client.query(params.query)
-						.then(result => emitResult(result, callback))
-						.catch(err => emitError(err, callback))
+						.then(result => sendSuccess( result, params.callback))
+						.catch(err => sendError(err, params.callback))
 						.finally(()=>client.end())
 				} else {
 					client.end()
-					emitResult(true, callback)
+					sendSuccess( true, params.callback)
 				}
 			})
-			.catch(err => emitError(err, callback))
+			.catch(err => sendError(err, params.callback))
 
 	} catch (err) {
-		emitError(err, callback)
+		sendError(err, params.callback)
 	}
 }

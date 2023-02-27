@@ -1,6 +1,4 @@
 const cmd=require('node-cmd')
-const eventName = path.basename(__filename, '.socket.js')
-
 module.exports = (socket, params) => {
 	try {
 		let command=params.command || ''

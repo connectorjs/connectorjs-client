@@ -1,9 +1,10 @@
-module.exports = (socket, params, callback) => {
+module.exports = (socket, params) => {
 	try {
-		// emitResult((new Date()).toISOString(),callback)
-		emitResult(new Date(),callback)
+    let data=new Date().toISOString()
+		sendSuccess( data, params.callback)
+		
 
 	} catch (err) {
-		emitError(err, callback)
+		sendError(err, params.callback)
 	}
 }

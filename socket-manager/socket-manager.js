@@ -3,7 +3,7 @@ var url = process.env.SOCKET_SERVER_URL || ''
 global.ws = null
 var reconnectionCount = 1
 const reconnectionInterval = () => {
-  let interval = Number(process.env.RECONNECTION_INTERVAL || 5000)
+  let interval = Number(process.env.RECONNECTION_INTERVAL || 30000)
   return interval
   let t = interval * reconnectionCount++
   let limit = 20 * 60 * 1000 // 20min
@@ -114,9 +114,9 @@ function connectServer() {
 
     ws.on('ping', () => ws.pong())
 
-    // ws.on('error', (err) => {
-    //   errorLog(err.name, err.message)
-    // })
+    ws.on('error', (err) => {
+      errorLog('hata', err.name, err.message)
+    })
 
     ws.on('close', () => {
       setTimeout(() => {

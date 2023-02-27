@@ -1,13 +1,13 @@
 const readXlsxFile = require('read-excel-file/node')
 const readSheetNames = require('read-excel-file/node').readSheetNames
 
-module.exports = (socket, params, callback) => {
+module.exports = (socket, params) => {
 	try {
 		let filePath=params.filePath
 		if(!filePath)
-			return emitError('filePath is required',callback)
+			return sendError('filePath is required',params.callback)
 		if(!fs.existsSync(filePath))
-		return emitError(`File not found`,callback)
+		return sendError(`File not found`,params.callback)
 
 		let obj={}
 
@@ -32,12 +32,12 @@ module.exports = (socket, params, callback) => {
 
 
 				calistir()
-					.then(() => emitResult(obj,callback))
-					.catch(err=>emitError(err,callback))
+					.then(() => sendSuccess(obj,params.callback))
+					.catch(err=>sendError(err,params.callback))
 			})
-			.catch(err=>emitError(err, callback))
+			.catch(err=>sendError(err, params.callback))
 
 	} catch (err) {
-		emitError(err, callback)
+		sendError(err, params.callback)
 	}
 }

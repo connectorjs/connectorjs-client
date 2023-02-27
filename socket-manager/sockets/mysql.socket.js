@@ -1,24 +1,24 @@
-let mysql = require('mysql')
-module.exports = (socket, params, callback) => {
+const mysql = require('mysql')
+module.exports = (socket, params) => {
 	try {
-		let con = mysql.createConnection(params.config)
+		const con = mysql.createConnection(params.config)
 		con.connect(err => {
 			if (!err) {
 				if (params.query) {
 					con.query(params.query, function (err, result, fields) {
 						if (!err)
-							emitResult(result, callback)
+              sendSuccess( result, params.callback)
 						else
-							emitError(err, callback)
+              sendError(err, params.callback)
 					})
 				} else {
-					emitResult(true, callback)
+					sendSuccess( true, params.callback)
 				}
 			} else {
-				emitError(err, callback)
+				sendError(err, params.callback)
 			}
 		})
 	} catch (err) {
-		emitError(err, callback)
+		sendError(err, params.callback)
 	}
 }
