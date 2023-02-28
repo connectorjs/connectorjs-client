@@ -1,13 +1,15 @@
 {
   "name": "connectorjs-client",
-  "version": "2.0.0",
-  "description": "Establish easy and secure connection to your local server/pc databases",
+  "version": "2.0.3",
+  "description": "Establish easy and secure remote connection to your local databases, files, etc.",
+  "main": "connector-client.js",
   "scripts": {
     "start": "nodemon connector-client.js",
     "env": "node node_modules/env-sample/cli.js"
   },
   "bin": {
-    "connectorjs": "./cli.js"
+    "connectorjs": "./cli.js",
+    "connectorjs-start": "./cli.js start"
   },
   "repository": {
     "type": "git",
