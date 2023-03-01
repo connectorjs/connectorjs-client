@@ -1,6 +1,6 @@
 {
   "name": "connectorjs-client",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "description": "Establish easy and secure remote connection to your local databases, files, etc.",
   "main": "connector-client.js",
   "scripts": {
