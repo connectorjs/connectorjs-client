@@ -69,6 +69,14 @@ or try install via npm/yarn package managers.
 ### Linux / Ubuntu
 
 
+```ubuntu
+$ sudo apt-get install node
+
+$ npm install connectorjs-client
+
+```
+
+
 
 
 
