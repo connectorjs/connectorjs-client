@@ -1,3 +1,5 @@
+installer
+
 *.code-workspace
 *!!__*
 *copy *
@@ -106,9 +108,3 @@ dist
 
 # DynamoDB Local files
 .dynamodb/
-
-# TernJS port file
-.tern-port
-
-installer/**/*.exe
-installer/**/*.zip

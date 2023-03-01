@@ -1,24 +1,43 @@
 #!/usr/bin/env node
+global.__root=__dirname
+require('colors')
+
+require('use-strict')
+const path = require('path')
+
+global.util = require(path.join(__root, 'lib', 'util'))
 
 const args = require('yargs').argv
 
 if (args.h || args.help) {
   showHelp()
-  process.exit(0)
+  console.log('\nPress any key to continue.')
+  process.stdin.once('data', function () {
+    process.exit(0)
+  })
+  return
 }
 
 if (args.v || args.version) {
   console.log(require('./package.json').version)
-  process.exit(0)
+  console.log('\nPress any key to continue.')
+  process.stdin.once('data', function () {
+    process.exit(0)
+  })
+  return
 }
 
-if(args._.includes('show')){
-  showInfo()
-  process.exit(0)
+if (args._.includes('show')) {
+  util.showAppInfo()
+  console.log('\nPress any key to continue.')
+  process.stdin.once('data', function () {
+    process.exit(0)
+  })
+  return
 }
 
 
-if(args._.includes('start')){
+if (args._.includes('start')) {
   require('./connector-client')
   return
 }
@@ -26,17 +45,6 @@ if(args._.includes('start')){
 
 
 
-
-function showInfo() {
-  require('dotenv').config()
-
-  const clientId = process.env.CLIENT_ID || ''
-  const clientPass = process.env.CLIENT_PASS || ''
-
-
-  console.log('clientId   :', clientId)
-  console.log('clientPass :', clientPass)
-}
 
 
 
@@ -56,5 +64,9 @@ connectorjs -h[--help]      help
 }
 
 showHelp()
-showInfo()
-console.log(`args`,args )
+util.showAppInfo()
+console.log('\nPress any key to continue.')
+process.stdin.once('data', function () {
+  process.exit(0)
+})
+return

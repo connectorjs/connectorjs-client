@@ -5,7 +5,8 @@
   "main": "connector-client.js",
   "scripts": {
     "start": "nodemon connector-client.js",
-    "env": "node node_modules/env-sample/cli.js"
+    "env": "node node_modules/env-sample/cli.js",
+    "nsis": "makensis.exe  /NOCONFIG /NOCD installer\\win64\\win64-install-script.nsi"
   },
   "bin": {
     "connectorjs": "./cli.js",
@@ -23,7 +24,7 @@
     "database",
     "nodejs"
   ],
-  "author": "MiaJupiter Developer Team",
+  "author": "MiaJupiter DevTeam | https://miajupiter.com",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/connectorjs/connector-client/issues"
