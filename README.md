@@ -42,14 +42,15 @@ Extract zip and install setup file [connectorjs-client-setup.zip](https://raw.gi
 
 #### Screenshots
 
- <a href="https://raw.githubusercontent.com/connectorjs/connector-client/main/docs/screen-shots/Screenshot_0_1.jpg" target="_blank"><img src="https://raw.githubusercontent.com/connectorjs/connector-client/main/docs/screen-shots/Screenshot_0_1.jpg" width="304" /></a>  <a href="https://raw.githubusercontent.com/connectorjs/connector-client/main/docs/screen-shots/Screenshot_0_2.jpg" target="_blank">
-<img src="https://raw.githubusercontent.com/connectorjs/connector-client/main/docs/screen-shots/Screenshot_0_2.jpg" width="304" />
+ <a href="https://raw.githubusercontent.com/connectorjs/connector-client/main/docs/screen-shots/Screenshot_0_1.jpg" target="_blank">
+ <img src="https://raw.githubusercontent.com/connectorjs/connector-client/main/docs/screen-shots/Screenshot_0_1.jpg" width="350" /></a>  <a href="https://raw.githubusercontent.com/connectorjs/connector-client/main/docs/screen-shots/Screenshot_0_2.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/connectorjs/connector-client/main/docs/screen-shots/Screenshot_0_2.jpg" width="350" />
 </a> <a href="https://raw.githubusercontent.com/connectorjs/connector-client/main/docs/screen-shots/Screenshot_0_3.jpg" target="_blank">
-<img src="https://raw.githubusercontent.com/connectorjs/connector-client/main/docs/screen-shots/Screenshot_0_3.jpg" width="304" />
-</a>  <a href="https://raw.githubusercontent.com/connectorjs/connector-client/main/docs/screen-shots/Screenshot_1.jpg" target="_blank"><img src="https://raw.githubusercontent.com/connectorjs/connector-client/main/docs/screen-shots/Screenshot_1.jpg" width="304" /></a>  <a href="https://raw.githubusercontent.com/connectorjs/connector-client/main/docs/screen-shots/Screenshot_2.jpg" target="_blank">
-<img src="https://raw.githubusercontent.com/connectorjs/connector-client/main/docs/screen-shots/Screenshot_2.jpg" width="304" />
+<img src="https://raw.githubusercontent.com/connectorjs/connector-client/main/docs/screen-shots/Screenshot_0_3.jpg" width="350" />
+</a>  <a href="https://raw.githubusercontent.com/connectorjs/connector-client/main/docs/screen-shots/Screenshot_1.jpg" target="_blank"><img src="https://raw.githubusercontent.com/connectorjs/connector-client/main/docs/screen-shots/Screenshot_1.jpg" width="350" /></a>  <a href="https://raw.githubusercontent.com/connectorjs/connector-client/main/docs/screen-shots/Screenshot_2.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/connectorjs/connector-client/main/docs/screen-shots/Screenshot_2.jpg" width="350" />
 </a> <a href="https://raw.githubusercontent.com/connectorjs/connector-client/main/docs/screen-shots/Screenshot_3.jpg" target="_blank">
-<img src="https://raw.githubusercontent.com/connectorjs/connector-client/main/docs/screen-shots/Screenshot_3.jpg" width="304" />
+<img src="https://raw.githubusercontent.com/connectorjs/connector-client/main/docs/screen-shots/Screenshot_3.jpg" width="350" />
 </a>
 ----
 
@@ -62,7 +63,7 @@ Extract zip and install setup file [connectorjs-client-setup.zip](https://raw.gi
 
 
 ### MacOS X
-...soon
+... soon
 
 or try install via npm/yarn package managers.
 
