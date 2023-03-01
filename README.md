@@ -51,7 +51,7 @@ Extract zip and install setup file [connectorjs-client-setup.zip](https://raw.gi
 </a> | <a href="https://raw.githubusercontent.com/connectorjs/connector-client/main/docs/screen-shots/Screenshot_3.jpg" target="_blank">
 <img src="https://raw.githubusercontent.com/connectorjs/connector-client/main/docs/screen-shots/Screenshot_3.jpg" width="241" />
 </a> |
---
+----
 
 
 
