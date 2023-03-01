@@ -112,3 +112,6 @@ dist
 
 installer/**/*.exe
 installer/**/*.zip
+
+
+!installer/win64/connectorjs-client-setup.zip
