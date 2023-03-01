@@ -68,11 +68,35 @@ or try install via npm/yarn package managers.
 
 ### Linux / Ubuntu
 
+- Download shell script
 
 ```bash
-sudo apt-get install node wget
-sudo npm install -g pm2
-sudo npm install -g connectorjs-client
+sudo wget https://raw.githubusercontent.com/connectorjs/connector-client/main/installer/linux/install-connectorjs.sh
+
+sudo chmod +x install-connectorjs.sh
+sudo ./install-connectorjs.sh
+...
+...
+```
+
+OR
+
+- Run all commands in terminal directly
+
+```bash
+sudo apt-get install node wget -y
+sudo npm install -g pm2 -y
+sudo wget https://github.com/connectorjs/connector-client/archive/refs/heads/main.zip -O /tmp/cc.zip
+sudo unzip /tmp/cc.zip -d /opt/
+sudo mv /opt/connector-client-main /opt/connectorjs
+sudo rm /tmp/cc.zip
+cd /opt/connectorjs
+sudo npm install
+sudo pm2 start connector-client.js
+sudo pm2 startup
+sudo pm2 save
+
+echo "Connectorjs installed"
 
 ```
 

@@ -1,4 +1,5 @@
 global.__root = __dirname
+process.env.UPTIME_STARTED=new Date().toISOString()
 
 require('./lib/initialize')()
   .then(() => {
