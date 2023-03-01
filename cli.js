@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+
+
 global.__root=__dirname
 require('colors')
 
@@ -38,7 +40,7 @@ if (args._.includes('show')) {
 
 
 if (args._.includes('start')) {
-  require('./connector-client')
+  require('./connectorjs-client')
   return
 }
 
